@@ -231,8 +231,7 @@
                             startTransaction();
 							
                             break;
-                        case "UnlockConnector": /////////ERROR!!!!!!!!
-                            //connectorId
+                        case "UnlockConnector":
                             var UC = JSON.stringify([3, id, {"status": "Unlocked"}]);
                             _websocket.send(UC);
                             connector_locked = false;
