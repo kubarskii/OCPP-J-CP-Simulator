@@ -233,12 +233,12 @@
                             break;
                         case "UnlockConnector": /////////ERROR!!!!!!!!
                             //connectorId
-                            var UC = JSON.stringify([3, id, {"status": "Accepted"}]);
+                            var UC = JSON.stringify([3, id, {"status": "Unlocked"}]);
                             _websocket.send(UC);
-                            // connector_locked = false;
-                            // $('.indicator').hide();
-                            //$('#yellow').show();
-                            //logMsg("Connector status changed to: "+connector_locked);
+                            connector_locked = false;
+                            $('.indicator').hide();
+                            $('#yellow').show();
+                            logMsg("Connector status changed to: "+connector_locked);
                             break;
                         default:
                             var error = JSON.stringify([4, id]);
