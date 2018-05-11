@@ -7,45 +7,36 @@
             background: #000;
 			color: white;
         }
-
         button, input, select {
             display: block;
             width: 100%;
             margin-bottom: 5px;
             cursor: pointer;
         }
-
         button {
             background: #369;
             color: #fff;
             padding: 5px 0;
             border: none;
         }
-
         ul {
             background: #000;
             color: #eee;
         }
-
         li {
         }
-
         #red, #green, #blue {
             min-width: 10px;
         }
-
         #red {
             background-color: red;
         }
-
         #green {
             background-color: green;
         }
-
         #blue {
             background-color: blue;
         }
-
         #yellow {
             background-color: yellow;
         }
@@ -65,7 +56,6 @@
 			text-align:center;
 		}
 		
-
     </style>
 
 </head>
@@ -98,12 +88,9 @@
         integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
         crossorigin="anonymous"></script>
 <script>
-
-
     $('.indicator').hide();
 	$('#red').show();
     function formatDate(date) {
-
         var day = String(date.getDate());
 		if (day.length <2){
 			day = ('0' + day.slice(-2));
@@ -134,18 +121,13 @@
 		}
         return year + '-' + monthIndex + '-' + day+"T"+h+":"+m+":"+s+"Z";
     }
-
     var c = 0;
-
     //alert(formatDate(new Date()));
-
     var start_id = "";
     var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
     var id = randonId();
     var _websocket = null;
-
     var connector_locked = false;
-
     function randonId() {
         id = "";
         for (var i = 0; i < 36; i++) {
@@ -153,27 +135,21 @@
         }
         return id;
     }
-
     function wsConnect() {
-
         var wsurl = $('select').val();
         var CP = $('#CP').val();
-
         if (_websocket) {
             $('#red').show();
             _websocket.close(3001);
         } else {
             _websocket = new WebSocket(wsurl + "" + CP, ["ocpp1.6", "ocpp1.5"]);
             _websocket.onopen = function (authorizationData) {
-
 				sessionStorage.setItem('LastAction', "BootNotification");
                 $('#yellow').show();
 				BootNotification();
 				
                 $('#connect').text('Disconnect').css('background', 'green');
-
             };
-
             _websocket.onmessage = function (msg) {
                 c++;
                 var ddata = (JSON.parse(msg.data));
@@ -183,12 +159,9 @@
 					sessionStorage.setItem("Confriguration",hb_interval);
 					startHB(hb_interval*1000);
 				}
-
                 if (ddata[0] === 3) {
 					la = getLastAction();
-
 					if (la == "startTransaction"){
-
 						ddata = ddata[2];
 						logMsg("Data exchange successful!");
 						var array = $.map(ddata, function (value, index) {
@@ -204,7 +177,6 @@
                 } else if ((JSON.parse(msg.data))[0] === 2) {
                     logMsg((JSON.parse(msg.data))[2]);
                     id = (JSON.parse(msg.data))[1];
-
                     switch (ddata[2]) {
                         case "Reset":
                             //Reset type SOFT, HARD
@@ -215,11 +187,9 @@
                         case "RemoteStopTransaction":
                             //TransactionID
                             var remStp = JSON.stringify([3, id, {"status": "Accepted"}]);
-                            _websocket.send(remStp);
-							
-							var stop_id = (JSON.parse(msg.data)[3].transactionId);
-							
-							stopTransaction(stop_id);
+                            _websocket.send(remStp);			
+			    var stop_id = (JSON.parse(msg.data)[3].transactionId);			
+			    stopTransaction(stop_id);
                             $('.indicator').hide();
                             $('#yellow').show();
                             break;
@@ -231,28 +201,23 @@
                             startTransaction();
 							
                             break;
-                        case "UnlockConnector": /////////ERROR!!!!!!!!
-                            //connectorId
-                            var UC = JSON.stringify([3, id, {"status": "Accepted"}]);
+                        case "UnlockConnector":
+                            var UC = JSON.stringify([3, id, {"status": "Unlocked"}]);
                             _websocket.send(UC);
-                            // connector_locked = false;
-                            // $('.indicator').hide();
-                            //$('#yellow').show();
-                            //logMsg("Connector status changed to: "+connector_locked);
+                            connector_locked = false;
+                            $('.indicator').hide();
+                            $('#yellow').show();
+                            logMsg("Connector status changed to: "+connector_locked);
                             break;
                         default:
                             var error = JSON.stringify([4, id]);
                             _websocket.send(error);
                             break;
                     }
-
                 }
-
-
                 // Получение данных из sessionStorage
                 //var data = sessionStorage.getItem('key');
             };
-
             _websocket.onclose = function (evt) {
                 $('#connect').text('Connect').css('background', '#369');
                 if (evt.code == 3001) {
@@ -266,7 +231,6 @@
                 }
                 //
             };
-
             _websocket.onerror = function (evt) {
                 if (_websocket.readyState == 1) {
                     $('#red').show();
@@ -275,12 +239,10 @@
             };
         }
     }
-
     function logMsg(err) {
         console.log(err);
         $('#console').append('<li>' + err + '</li>');
     }
-
 	function Authorize(){
 		
 		sessionStorage.setItem('LastAction', "Authorize");
@@ -336,7 +298,6 @@
 		}else if (1==2){
 			alert("else");
 		}
-
 	}
 	
 	function getLastAction(){
@@ -357,55 +318,42 @@
                     "meterType": "AVT NQC-ACDC",
                     "meterSerialNumber": "avt.001.13.1.01"
                 }]);
-
                 logMsg('ws connected');
-
                 _websocket.send(BN);
 	}
 	
 	function startHB(interval){
 		setInterval(send_heartbeat,interval);
 	}
-
 	function send_heartbeat() {
 		sessionStorage.setItem('LastAction', "Heartbeat");
         var HB = JSON.stringify([2, id, "Heartbeat", {}]);
         _websocket.send(HB);
     }
-
     //bind controls
     $('#connect').click(function () {
         $('.indicator').hide();
         $('#console').html("");
         wsConnect();
     });
-
     $('#send').click(function () {
 		Authorize();
 		
     });
-
     $('#start').click(function () {
 		startTransaction();
-
     });
-
     $('#stop').click(function () {
 		stopTransaction();
     });
-
     $('#mv').click(function () {
 		sessionStorage.setItem('LastAction', "MeterValues");
         var MV = JSON.stringify([2, id, "MeterValues", {"connectorId": 1}]);
         _websocket.send(MV);
-
     });
     $('#heartbeat').click(function () {
         send_heartbeat();
-
-
     });
-
     $('#status').click(function () {
 	sessionStorage.setItem('LastAction', "StatusNotification");
         var SN = JSON.stringify([2, id, "StatusNotification", {
@@ -418,9 +366,7 @@
             "vendorErrorCode": ""
         }]);
         _websocket.send(SN);
-
     });
-
     $('#data_transfer').click(function () {
 	sessionStorage.setItem('LastAction', "DataTransfer");
         var DT = JSON.stringify([2, id, "DataTransfer", {
@@ -429,17 +375,12 @@
             "data": ""
         }]);
         _websocket.send(DT);
-
     });
-
     $('#connect').on('change', function () {
-
         if (_websocket) {
             _websocket.close(3001);
         }
     });
-
-
 </script>
 
 
