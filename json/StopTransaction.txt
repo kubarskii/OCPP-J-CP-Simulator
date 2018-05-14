@@ -1,0 +1,79 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "StopTransactionRequest",
+  "type": "object",
+  "properties": {
+    "transactionId": {
+      "type": "number"
+    },
+    "idTag": {
+      "type": "string",
+      "maxLength": 20
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "meterStop": {
+      "type": "number"
+    },
+    "transactionData": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "values": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "timestamp": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "values": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "value": {
+                        "type": "string"
+                      },
+                      "context": {
+                        "type": "string"
+                      },
+                      "format": {
+                        "type": "string"
+                      },
+                      "measurand": {
+                        "type": "string"
+                      },
+                      "location": {
+                        "type": "string"
+                      },
+                      "unit": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "value"
+                    ]
+                  },
+                  "minItems": 1
+                }
+              },
+              "required": [
+                "values"
+              ]
+            }
+          }
+        }
+      }
+    }
+  },
+  "required": [
+    "transactionId",
+    "timestamp",
+    "meterStop"
+  ]
+}

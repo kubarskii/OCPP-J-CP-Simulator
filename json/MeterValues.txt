@@ -1,0 +1,61 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "MeterValuesRequest",
+  "type": "object",
+  "properties": {
+    "connectorId": {
+      "type": "number"
+    },
+    "transactionId": {
+      "type": "number"
+    },
+    "values": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "values": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "value": {
+                  "type": "string"
+                },
+                "context": {
+                  "type": "string"
+                },
+                "format": {
+                  "type": "string"
+                },
+                "measurand": {
+                  "type": "string"
+                },
+                "location": {
+                  "type": "string"
+                },
+                "unit": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "value"
+              ]
+            },
+            "minItems": 1
+          }
+        },
+        "required": [
+          "values"
+        ]
+      }
+    }
+  },
+  "required": [
+    "connectorId"
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "StatusNotificationRequest",
+  "type": "object",
+  "properties": {
+    "connectorId": {
+      "type": "number"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "Available",
+        "Occupied",
+        "Faulted",
+        "Unavailable",
+        "Reserved"
+      ]
+    },
+    "errorCode": {
+      "type": "string",
+      "enum": [
+        "ConnectorLockFailure",
+        "HighTemperature",
+        "Mode3Error",
+        "NoError",
+        "PowerMeterFailure",
+        "PowerSwitchFailure",
+        "ReaderFailure",
+        "ResetFailure",
+        "GroundFailure",
+        "OverCurrentFailure",
+        "UnderVoltage",
+        "WeakSignal",
+        "OtherError"
+      ]
+    },
+    "info": {
+      "type": "string"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "vendorId": {
+      "type": "string"
+    },
+    "vendorErrorCode": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "connectorId",
+    "status",
+    "errorCode"
+  ]
+}

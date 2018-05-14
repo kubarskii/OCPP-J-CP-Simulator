@@ -1,0 +1,19 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "DataTransferRequest",
+  "type": "object",
+  "properties": {
+    "vendorId": {
+      "type": "string"
+    },
+    "messageId": {
+      "type": "string"
+    },
+    "data": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "vendorId"
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "StartTransactionRequest",
+  "type": "object",
+  "properties": {
+    "connectorId": {
+      "type": "number"
+    },
+    "idTag": {
+      "type": "string",
+      "maxLength": 20
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "meterStart": {
+      "type": "number"
+    },
+    "reservationId": {
+      "type": "number"
+    }
+  },
+  "required": [
+    "connectorId",
+    "idTag",
+    "timestamp",
+    "meterStart"
+  ]
+}

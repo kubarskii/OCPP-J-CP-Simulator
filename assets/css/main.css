@@ -1,0 +1,244 @@
+ body {
+            background: lightgrey;
+	
+        }
+
+        button, input, select {
+            display: block;
+            width: 100%;
+            margin-bottom: 5px;
+            cursor: pointer;
+        }
+		
+		input{}
+		
+        button {
+            background: #369;
+            color: #fff;
+            padding: 5px 0;
+            border: none;
+        }
+
+        li {
+        }
+
+        #red, #green, #blue {
+            min-width: 10px;
+        }
+
+        #red {
+            background-color: red;
+        }
+
+        #green {
+            background-color: green;
+        }
+
+        #blue {
+            background-color: blue;
+        }
+
+        #yellow {
+            background-color: yellow;
+        }
+		
+		table,th,tr,td{
+			border: 1px solid black;
+		}
+		
+		table{
+			margin: auto;
+		}
+		form{
+			padding-top: 20px;
+		}
+		
+		.center{
+			text-align:center;
+		}
+		
+		a{
+			color: green;
+			text-decoration:none;
+		}
+		
+		a:visited, a:focus{
+			color: green;
+			cursor:pointer;
+		}
+		
+		a:hover{
+			color:orange;
+		}
+
+		
+		
+		#UI{
+			margin: auto;
+			border: 1px solid black;
+			border-radius: 3px;
+			width:800px;
+			height: 480px;
+			overflow: hidden;
+			position: relative;
+
+			
+		}
+		
+		#UI_form{
+			position: absolute;
+			z-index:10;
+			left: 25px;
+		}
+		
+		#tesla{
+			z-index:2;
+			//border: 1px solid black;
+			position: absolute;
+			width: 600px;
+			top: 85px;
+			left: 210px;
+			
+		}
+		
+		#charge_point{
+		z-index:1;
+			position: absolute;
+			width: 300px;
+			left: 495px;
+		}
+		
+		#back{
+			position: absolute;
+			top:420px;
+			border: 1px solid black;
+			border-radius: 3px;
+			background-color: green;
+			padding: 10px;
+			color: white;
+		}
+		
+		#back:hover{
+			cursor: pointer;
+			background-color: #0ead0e;
+		}
+		
+		@mixin border-radius($radius) {
+		  -webkit-border-radius: $radius;
+		  -moz-border-radius: $radius;
+		  -ms-border-radius: $radius;
+		  border-radius: $radius;
+		}
+
+		@mixin transition($args...) {
+		  -webkit-transition: $args;
+		  -moz-transition: $args;
+		  -ms-transition: $args;
+		  -o-transition: $args;
+		  transition: $args;
+		}
+
+		.table {
+		  border: 1px solid green;
+		  border-radius: 5px;
+		  display: flex;
+		  flex-wrap: wrap;
+		  max-width: 500px;
+		}
+
+		.table-cell {
+		  border-bottom: 1px solid green;
+		  box-sizing: border-box;
+		  flex-grow: 1;
+		  width: 100%;
+		  padding: 0.8em 1.2em;
+		  overflow: hidden;
+		  list-style-type: none;
+		  text-align: center;
+		  font-weight: 300;
+		  margin: {
+			top: 1px;
+			left: 1px;
+		  }
+		  &:first-child {
+			//outline: 1px solid #fff;
+			background: transparent;
+			@media only screen and (max-width : 768px) {
+					display: none;
+				}
+		  }
+		  &:nth-child(3) {
+			//outline: 1px solid #30305b;
+		  }
+		  &:nth-child(-n+3) {
+			padding: {
+				top: 40px;
+				bottom: 40px;
+			}
+		  }
+		  > h3 {
+			font-size: 26px;
+			margin: {
+				top: 0;
+				bottom: 3rem;
+			}
+		  }
+		  &.cell-feature {
+			
+			text-align: left;
+			font-size: 18px;
+		  }
+		  &.plattform {
+			color: limegreen;
+			a.btn {
+			  color: limegreen;
+			  
+			  &:hover {
+				background-color: limegreen;
+				border-color: limegreen;
+				
+			  }
+			}
+		  }
+		  &.enterprise {
+			background-color: #30305b;
+			
+			a.btn {
+			  
+			  &:hover {
+				background-color: #85bafc;
+				border-color: #85bafc;
+				
+			  }
+			}
+		  }
+		}
+
+		/* Table columns
+		================================== */
+		.table-cell  {
+		  width: calc(33.33% - 1px);
+		  &.cell-feature {
+			  @media only screen and (max-width : 768px) {
+				  width: 100%;
+				  text-align: center;
+			  }
+		  }
+		}
+
+		svg.enterprise-check path {
+		  fill: #30305b !important;
+		}
+
+		a.btn {
+		  border: 2px solid;
+		  border-radius: 5px;
+		  padding: .6rem .9rem .6rem .9rem;
+		  font-weight: 400;
+		  text: {
+			transform: uppercase;
+			decoration: none;
+		  }
+		  @include transition(0.2s ease-in-out);
+		  @include border-radius(.3rem);
+		}
