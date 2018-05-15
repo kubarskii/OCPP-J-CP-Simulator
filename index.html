@@ -19,7 +19,9 @@
 
 <button id="connect">Connect</button>
 <button id="send">Authorize</button>
+<input id="connectorId" type="text" placeholder="connectorId" value="2"/>
 <button id="start">Start Transaction</button>
+<input id ="TransToStp" type="text" placeholder="Transaction to stop" value=""/>
 <button id="stop">Stop Transaction</button>
 <button id="heartbeat">Heartbeat</button>
 <button id="mv">Meter Values</button>
@@ -39,7 +41,7 @@
 <li><a href="#tab1" class="active">UI</a></li>
 <li><a href="#tab2">Settings</a></li>
 <li><a href="#tab3">Log</a></li>
-<li><a href="#tab4">Configuration</a></li>
+<li><a href="#tab4">Transactions</a></li>
 </ul>
 <div id="tab1" class="tabset_content">
   <h2 class="tabset_label"></h2>
@@ -165,7 +167,7 @@
 		<span>Id CP</span><input id="CP" type="text" placeholder="Id CP" value="HELLO"/>
 		<span>Time Zone</span><input id="timeZone" type="text" placeholder="Time Zone" value="-3"/>
 		<span>idTag</span><input id="idTag" type="text" placeholder="idTag" value=""/>
-		<span>connectorId</span><input id="connectorId" type="text" placeholder="connectorId" value=""/>
+		
 		<span>meterStart</span><input id="meterStart" type="text" placeholder="meterStart" value=""/>
 		<span>reservationId</span><input id="reservationId" type="text" placeholder="reservationId" value=""/>
 		<span>meterStop</span><input id="meterStop" type="text" placeholder="meterStop" value=""/>
@@ -190,7 +192,10 @@
   
   <div id="tab4" class="tabset_content">
   <h2 class="tabset_label"></h2>
-     <p>Configuration should be here</p>
+     <p>Active transactions:</p>
+	 <div id = "transactions">
+	
+	 </div>
   </div>
 
 
@@ -255,6 +260,18 @@
 		meterSerialNumber = $('#meterSerialNumber').val();
 		datatrasfer = $('#datatrasfer').val();
 	}
+	
+	try{ //if (sessionStorage.getItem("TransactionId") !== undefined) {}else{}
+		for(var i = 0; i<JSON.parse(sessionStorage.getItem("TransactionId")).length; i++){		
+			if (JSON.parse(sessionStorage.getItem("TransactionId"))[i] == null){
+				continue;
+			}		
+			$('#transactions').append(JSON.parse(sessionStorage.getItem("TransactionId"))[i] + "<br>");			
+		}
+	}catch(e){
+		$('#transactions').html('No transactions!')
+	}
+	
 	
 	//UI + 
 	var step = 1;
@@ -433,13 +450,29 @@
 					if (la == "startTransaction"){
 
 						ddata = ddata[2];
-						logMsg("Data exchange successful!");
+						//logMsg("Data exchange successful!");
 						
 						var array = $.map(ddata, function (value, index) {
 							return [value];
 						});
 						var TransactionId = (array[0]);
-						sessionStorage.setItem('TransactionId', TransactionId);
+						try{
+							var arr = JSON.parse(sessionStorage.getItem("TransactionId"));
+							arr.push(TransactionId);
+							sessionStorage.setItem('TransactionId', JSON.stringify(arr));
+						}catch(e){
+							sessionStorage.setItem('TransactionId', JSON.stringify([TransactionId]));
+						}
+						$('#transactions').html('');
+						
+						for(var i = 0; i<JSON.parse(sessionStorage.getItem("TransactionId")).length; i++){
+						if (JSON.parse(sessionStorage.getItem("TransactionId"))[i] == null){
+							continue;
+						}	
+							$('#transactions').append(JSON.parse(sessionStorage.getItem("TransactionId"))[i] + "<br>");
+						}
+						$('#TransToStp').val(TransactionId);						
+						//logMsg(TransactionId);
 					}
 					logMsg("Response recieved successfully!");
 					
@@ -552,13 +585,15 @@
 	}
 	
 	function startTransaction(){
+		onAction();
+		
 		sessionStorage.setItem('LastAction', "startTransaction");
 		$('.indicator').hide();
         $('#green').show();
         connector_locked = true;
         logMsg("Connector status changed to: " + connector_locked);
         var strtT = JSON.stringify([2, id, "StartTransaction", {
-            "connectorId": 2,
+            "connectorId": connectorId,
             "idTag": "B4F62CEF",
             "timestamp": formatDate(new Date()),
             "meterStart": 0,
@@ -568,18 +603,34 @@
 	}
 	
 	function stopTransaction(transaction_id = false){
+		
 		sessionStorage.setItem('LastAction', "stopTransaction");	
 		transaction_id == false ? ssid = sessionStorage.getItem('TransactionId') : ssid = transaction_id;
         $('.indicator').hide();
         connector_locked = false;
         logMsg("Connector status changed to: " + connector_locked);
         $('#yellow').show();
+		if ((transaction_id === false)&&($('#TransToStp').val()!='')){
+			ssid = $('#TransToStp').val();
+		}
         var stpT = JSON.stringify([2, id, "StopTransaction",{
             "transactionId": ssid,
             "idTag": "B4F62CEF",
             "timestamp": formatDate(new Date()),
             "meterStop": 20
         }]);
+
+		var arr = JSON.parse(sessionStorage.getItem("TransactionId"));
+		delete arr[arr.indexOf(parseInt(ssid))];
+		sessionStorage.setItem('TransactionId', JSON.stringify(arr));
+		$('#transactions').html('');
+		for(var i = 0; i<JSON.parse(sessionStorage.getItem("TransactionId")).length; i++){
+			if (JSON.parse(sessionStorage.getItem("TransactionId"))[i] == null){
+			continue;
+			}
+			$('#transactions').append(JSON.parse(sessionStorage.getItem("TransactionId"))[i] + "<br>");
+		}
+
         _websocket.send(stpT);
 	}
 	
@@ -704,7 +755,7 @@
 	onAction();
 	sessionStorage.setItem('LastAction', "StatusNotification");
         var SN = JSON.stringify([2, id, "StatusNotification", {
-            "connectorId": 2,
+            "connectorId": connectorId,
             "status": "Available",
             "errorCode": "NoError",
             "info": "",
