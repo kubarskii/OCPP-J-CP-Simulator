@@ -593,7 +593,7 @@
         connector_locked = true;
         logMsg("Connector status changed to: " + connector_locked);
         var strtT = JSON.stringify([2, id, "StartTransaction", {
-            "connectorId": connectorId,
+            "connectorId": parseInt(connectorId),
             "idTag": "B4F62CEF",
             "timestamp": formatDate(new Date()),
             "meterStart": 0,
