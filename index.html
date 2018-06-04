@@ -579,7 +579,7 @@
 	function Authorize(){
 		
 		sessionStorage.setItem('LastAction', "Authorize");
-        var Auth = JSON.stringify([2, id, "Authorize", {"idTag": "B4F62CEF"}]);
+        var Auth = JSON.stringify([2, id, "Authorize", {"idTag": idTag}]);
         _websocket.send(Auth);
 	
 	}
@@ -594,7 +594,7 @@
         logMsg("Connector status changed to: " + connector_locked);
         var strtT = JSON.stringify([2, id, "StartTransaction", {
             "connectorId": parseInt(connectorId),
-            "idTag": "B4F62CEF",
+            "idTag": idTag,
             "timestamp": formatDate(new Date()),
             "meterStart": 0,
             "reservationId": 0
@@ -615,7 +615,7 @@
 		}
         var stpT = JSON.stringify([2, id, "StopTransaction",{
             "transactionId": parseInt(ssid),
-            "idTag": "B4F62CEF",
+            "idTag": idTag,
             "timestamp": formatDate(new Date()),
             "meterStop": 20
         }]);
