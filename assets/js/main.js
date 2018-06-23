@@ -384,7 +384,7 @@ function stopTransaction(transaction_id = false) {
         ssid = $('#TransToStp').val();
     }
     var stpT = JSON.stringify([2, id, "StopTransaction", {
-        "transactionId": ssid,
+        "transactionId": parseInt(ssid),
         "idTag": idTag,
         "timestamp": formatDate(new Date()),
         "meterStop": 20
