@@ -13,9 +13,7 @@
 	<script type="text/javascript" src="assets/js/attachevent.js"></script>
 	<script type="text/javascript" src="assets/js/addcss.js"></script>
 	<script type="text/javascript" src="assets/js/tabtastic.js"></script>
-	<script src="https://unpkg.com/react@16/umd/react.development.js"></script>
-	<script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
-	<script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+	
 	<!--link rel="stylesheet" type="text/css" href="assets/css/tabtastic.css"-->
 	<link rel="stylesheet" type="text/css" href="assets/css/main.css">
 
@@ -45,7 +43,7 @@
 		<span>Time: </span>
 		<span id="time"></span>
 	</div>
-	<div id="root_time"></div>
+	
 	<ul class="tabset_tabs">
 		<li>
 			<a href="#tab1" class="active">UI</a>
@@ -257,20 +255,7 @@
 
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
 	 crossorigin="anonymous"></script>
-
-	<script type="text/babel">
-	function tick() {
-		const element = (
-		<div>
-		<p>Time on local machine: {new Date().toLocaleTimeString()}</p>
-		</div>
-		);
-		ReactDOM.render(element, document.getElementById('root_time'));
-	}
-	setInterval(tick, 1000);
-</script>
-
-<script src="assets/js/main.js"></script>
+	<script src="assets/js/main.js"></script>
 
 
 </body>
