@@ -17,21 +17,21 @@ var meterSerialNumber = $('#meterSerialNumber').val();
 var datatrasfer = $('#datatrasfer').val();
 
 function onAction() {
-    idTag = $('#idTag').val();
+    idTag = $('#idTag').val().trim() || "IDTAG-1";
     connectorId = $('#connectorId').val();
     meterStart = $('#meterStart').val();
     reservationId = $('#reservationId').val();
     meterStop = $('#meterStop').val();
     transactionData = $('#transactionData').val();
-    chargePointVendor = $('#chargePointVendor').val();
-    chargePointModel = $('#chargePointModel').val();
-    chargePointSerialNumber = $('#chargePointSerialNumber').val();
-    chargeBoxSerialNumber = $('#chargeBoxSerialNumber').val();
-    firmwareVersion = $('#firmwareVersion').val();
+    chargePointVendor = $('#chargePointVendor').val().trim() || "AVT-Company";
+    chargePointModel = $('#chargePointModel').val().trim() || "AVT-Express";
+    chargePointSerialNumber = $('#chargePointSerialNumber').val().trim() || "avt.001.13.1";
+    chargeBoxSerialNumber = $('#chargeBoxSerialNumber').val().trim() || "avt.001.13.1.01";
+    firmwareVersion = $('#firmwareVersion').val().trim() || "0.9.87";
     iccid = $('#iccid').val();
     imsi = $('#imsi').val();
-    meterType = $('#meterType').val();
-    meterSerialNumber = $('#meterSerialNumber').val();
+    meterType = $('#meterType').val().trim() || "AVT NQC-ACDC";
+    meterSerialNumber = $('#meterSerialNumber').val().trim() || "avt.001.13.1.01";
     datatrasfer = $('#datatrasfer').val();
 }
 
@@ -441,17 +441,18 @@ function getLastAction() {
 }
 
 function BootNotification() {
+    onAction();
 
     var BN = JSON.stringify([2, id, "BootNotification", {
-        "chargePointVendor": "AVT-Company",
-        "chargePointModel": "AVT-Express",
-        "chargePointSerialNumber": "avt.001.13.1",
-        "chargeBoxSerialNumber": "avt.001.13.1.01",
-        "firmwareVersion": "0.9.87",
-        "iccid": "",
-        "imsi": "",
-        "meterType": "AVT NQC-ACDC",
-        "meterSerialNumber": "avt.001.13.1.01"
+        "chargePointVendor": chargePointVendor,
+        "chargePointModel": chargePointModel,
+        "chargePointSerialNumber": chargePointSerialNumber,
+        "chargeBoxSerialNumber": chargeBoxSerialNumber,
+        "firmwareVersion": firmwareVersion,
+        "iccid": iccid,
+        "imsi": imsi,
+        "meterType": meterType,
+        "meterSerialNumber": meterSerialNumber,
     }]);
 
     logMsg('ws connected');
