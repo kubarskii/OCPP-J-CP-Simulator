@@ -352,9 +352,10 @@ function logMsg(err) {
 }
 
 function Authorize() {
+    onAction();
 
     sessionStorage.setItem('LastAction', "Authorize");
-    var Auth = JSON.stringify([2, id, "Authorize", { "idTag": "B4F62CEF" }]);
+    var Auth = JSON.stringify([2, id, "Authorize", { "idTag": idTag }]);
     _websocket.send(Auth);
 
 }
@@ -369,7 +370,7 @@ function startTransaction() {
     logMsg("Connector status changed to: " + connector_locked);
     var strtT = JSON.stringify([2, id, "StartTransaction", {
         "connectorId": connectorId,
-        "idTag": "B4F62CEF",
+        "idTag": idTag,
         "timestamp": formatDate(new Date()),
         "meterStart": 0,
         "reservationId": 0
@@ -378,6 +379,7 @@ function startTransaction() {
 }
 
 function stopTransaction(transaction_id = false) {
+    onAction();
 
     sessionStorage.setItem('LastAction', "stopTransaction");
     transaction_id == false ? ssid = sessionStorage.getItem('TransactionId') : ssid = transaction_id;
@@ -390,7 +392,7 @@ function stopTransaction(transaction_id = false) {
     }
     var stpT = JSON.stringify([2, id, "StopTransaction", {
         "transactionId": ssid,
-        "idTag": "B4F62CEF",
+        "idTag": idTag,
         "timestamp": formatDate(new Date()),
         "meterStop": 20
     }]);
