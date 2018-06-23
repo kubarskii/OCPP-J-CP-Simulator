@@ -1,20 +1,10 @@
-var tz;
-var idTag = $('#idTag').val();
-var connectorId = $('#connectorId').val();
-var meterStart = $('#meterStart').val();
-var reservationId = $('#reservationId').val();
-var meterStop = $('#meterStop').val();
-var transactionData = $('#transactionData').val();
-var chargePointVendor = $('#chargePointVendor').val();
-var chargePointModel = $('#chargePointModel').val();
-var chargePointSerialNumber = $('#chargePointSerialNumber').val();
-var chargeBoxSerialNumber = $('#chargeBoxSerialNumber').val();
-var firmwareVersion = $('#firmwareVersion').val();
-var iccid = $('#iccid').val();
-var imsi = $('#imsi').val();
-var meterType = $('#meterType').val();
-var meterSerialNumber = $('#meterSerialNumber').val();
-var datatrasfer = $('#datatrasfer').val();
+var tz,
+ idTag,
+ connectorId, meterStart, reservationId, meterStop, transactionData,
+ chargePointVendor, chargePointModel, chargePointSerialNumber, chargeBoxSerialNumber,
+ firmwareVersion, iccid, imsi, meterType, meterSerialNumber, datatrasfer;
+
+ onAction();
 
 function onAction() {
     idTag = $('#idTag').val().trim() || "IDTAG-1";
