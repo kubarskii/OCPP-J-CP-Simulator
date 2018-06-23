@@ -18,7 +18,7 @@ var datatrasfer = $('#datatrasfer').val();
 
 function onAction() {
     idTag = $('#idTag').val().trim() || "IDTAG-1";
-    connectorId = $('#connectorId').val();
+    connectorId = parseInt($('#connectorId').val());
     meterStart = $('#meterStart').val();
     reservationId = $('#reservationId').val();
     meterStop = $('#meterStop').val();
