@@ -382,11 +382,14 @@ function stopTransaction(transaction_id = false) {
     onAction();
 
     sessionStorage.setItem('LastAction', "stopTransaction");
-    transaction_id == false ? ssid = sessionStorage.getItem('TransactionId') : ssid = transaction_id;
+    var ssid = transaction_id == false ? sessionStorage.getItem('TransactionId') : transaction_id;
+
     $('.indicator').hide();
+
     connector_locked = false;
     logMsg("Connector status changed to: " + connector_locked);
     $('#yellow').show();
+
     if ((transaction_id === false) && ($('#TransToStp').val() != '')) {
         ssid = $('#TransToStp').val();
     }
@@ -398,9 +401,12 @@ function stopTransaction(transaction_id = false) {
     }]);
 
     var arr = JSON.parse(sessionStorage.getItem("TransactionId"));
+
     delete arr[arr.indexOf(parseInt(ssid))];
     sessionStorage.setItem('TransactionId', JSON.stringify(arr));
+    
     $('#transactions').html('');
+    
     for (var i = 0; i < JSON.parse(sessionStorage.getItem("TransactionId")).length; i++) {
         if (JSON.parse(sessionStorage.getItem("TransactionId"))[i] == null) {
             continue;
