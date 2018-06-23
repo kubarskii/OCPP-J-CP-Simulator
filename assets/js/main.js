@@ -175,12 +175,12 @@ var connecting;
 
 var start_id = "";
 var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-var id = randonId();
+var id = randomId();
 var _websocket = null;
 
 var connector_locked = false;
 
-function randonId() {
+function randomId() {
     id = "";
     for (var i = 0; i < 36; i++) {
         id += possible.charAt(Math.floor(Math.random() * possible.length));
