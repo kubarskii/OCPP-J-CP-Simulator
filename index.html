@@ -180,8 +180,11 @@
 		<span>iccid</span><input id="iccid" type="text" placeholder="iccid" value=""/>
 		<span>imsi</span><input id="imsi" type="text" placeholder="imsi" value=""/>
 		<span>meterType</span>	<input id="meterType" type="text" placeholder="meterType" value=""/>
+		<span>meterValue</span>	<input id="meterValue" type="text" placeholder="meterValue" value=""/>
+		<span>meterValueUnit</span>	<input id="meterValueUnit" type="text" placeholder="meterValueUnit" value=""/>
+		<span>meterValueTransaction</span>	<input id="meterValueTransaction" type="text" placeholder="meterValueTransaction" value=""/>
 		<span>meterSerialNumber</span><input id="meterSerialNumber" type="text" placeholder="meterSerialNumber" value=""/>
-		<span>datatrasfer</span>	<input id="datatrasfer" type="text" placeholder="datatrasfer" value="data"/>
+		<span>datatransfer</span>	<input id="datatrasfer" type="text" placeholder="datatrasfer" value="data"/>
 		
 	  </form>
   </div>
@@ -741,7 +744,21 @@
     $('#mv').click(function () {
 	onAction();
 		sessionStorage.setItem('LastAction', "MeterValues");
-        var MV = JSON.stringify([2, id, "MeterValues", {"connectorId": 1}]);
+        var MV = JSON.stringify([2, id, "MeterValues", {
+            "connectorId": 1,
+            "meterValue": [
+            {
+              "sampledValue": [
+                {
+                  "unit": $('#meterValueUnit').val(),
+                  "value": $('#meterValue').val(),
+                },
+              ],
+              "timestamp": new Date(),
+            },
+        ],
+        "transactionId": Number.parseInt($('#meterValueTransaction').val()),
+        }]);
         _websocket.send(MV);
 
     });
